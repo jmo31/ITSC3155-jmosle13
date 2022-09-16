@@ -22,14 +22,18 @@ def count_threes(n):
 # a string s and returns the character that has the longest consecutive repeat.
 def longest_consecutive_repeating_char(s):
   count = 0
+  letter = s[0]
+  for i in range(len(s)):
+    conseq_count = 1
+    for x in range(i + 1, len(s)):
+      if s[i] != s[x]:
+        break
+      conseq_count += 1
+    if conseq_count > count:
+      count = conseq_count
+      letter = s[i]
+  return letter
 
-  for i in range(s):
-    if s[i-1] == s[i]:
-      count+=1
-    if count > len(s)/2:
-      return i
-
-  return
 
 
 # Part C. is_palindrome
