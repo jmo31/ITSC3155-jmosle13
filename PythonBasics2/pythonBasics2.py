@@ -6,36 +6,50 @@
 
 
 # Part A. count_threes
-# Define a function count_threes(n) that takes an int and
-# returns the number of multiples of 3 in the range from 0
-# to n (including n).
+# Define a function count_threes(n) that takes a string and
+# returns the multiple of three that occurs the most
+# in the string. For example, 093699 would return 9
+# since 9 has occurred the most and is a multiple of 3.
 
 def count_threes(n):
-  counter = 0
-  for i in range(0, n+1):
-    if i % 3 == 0 and i != 0:
-      counter += 1
-
-  return counter
+  threes_dict = {}
+  for i in n:
+    if i in threes_dict and (i == '3' or i =='6' or i == '9'):
+      threes_dict[i] += 1
+    else:
+      threes_dict[i] = 0
+  threes_result = int(max(threes_dict, key = threes_dict.get))
+  return threes_result
 # Part B. longest_consecutive_repeating_char
 # Define a function longest_consecutive_repeating_char(s) that takes
 # a string s and returns the character that has the longest consecutive repeat.
+# If there is a tie between different characters, it should
+# return all the tied characters.
 def longest_consecutive_repeating_char(s):
+  long_dict = {}
   count = 0
   letter = s[0]
+  conseq_list = []
   for i in range(len(s)):
     conseq_count = 1
-    for x in range(i + 1, len(s)):
+    for x in range(i+1, len(s)):
       if s[i] != s[x]:
-        break
+         break
       conseq_count += 1
-    if conseq_count > count:
+    if conseq_count >= count:
       count = conseq_count
       letter = s[i]
-  return letter
-
-
-
+      long_dict[letter] = count
+  dict_keys = long_dict.keys()
+  dict_values = long_dict.values()
+  max_value = 0
+  for dict_keys, dict_values in long_dict.items():
+    if(max_value < dict_values):
+      max_value = dict_values
+  for dict_keys, dict_values in long_dict.items():
+    if(max_value == dict_values):
+      conseq_list.extend(dict_keys)
+  return conseq_list
 # Part C. is_palindrome
 # Define a function is_palindrome(s) that takes a string s
 # and returns whether or not that string is a palindrome.
