@@ -132,6 +132,7 @@ def register():
         session['user_id'] = new_user.id  # access id value from user model of this newly added user
         # show user dashboard view
         return redirect(url_for('get_notes'))
+    return render_template('register.html', form=form)
 
 @app.route('/login', methods=['POST', 'GET'])
 def login():
@@ -157,8 +158,15 @@ def login():
         return render_template("login.html", form=login_form)
 
 
-    # something went wrong - display register view
     return render_template('register.html', form=form)
+
+@app.route('/logout')
+def logout():
+    # check if a user is saved in session
+    if session.get('user'):
+        session.clear()
+
+    return redirect(url_for('index'))
 
 
 app.run(host=os.getenv('IP', '127.0.0.1'), port=int(os.getenv('PORT', 5000)), debug=True)
